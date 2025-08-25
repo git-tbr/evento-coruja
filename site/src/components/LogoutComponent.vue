@@ -13,7 +13,7 @@ const closeModal = () => {
 const doLogout = () => {
     siteStore.logout()
     router.push({
-        name: 'index'
+        name: 'home'
     })
 }
 
@@ -40,7 +40,7 @@ defineExpose({
                     <div class="mt-3">
                         <div class="row">
                             <div class="col-6 d-grid">
-                                <button class="btn btn-secondary" @click="closeModal">Não</button>
+                                <button type="button" class="btn btn-secondary" @click="closeModal">Não</button>
                             </div>
                             <div class="col-6 d-grid">
                                 <button type="submit" class="btn btn-danger">Sim</button>

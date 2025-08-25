@@ -239,6 +239,15 @@ const professors = [
               <p class="fs-5 fw-semibold text-light">
                 Garanta sua vaga agora!
               </p>
+              <p class="fs-5 text-light">
+                <b>Investimento:</b>
+                <br>
+                <span class="fst-italic">
+                Ex-alunos: 80&euro; (2,96&euro;/hora-aula)
+                <br>
+                Alunos-novos: 200&euro; (7,4&euro;/hora-aula)
+                </span>
+              </p>
               <div class="d-grid my-5">
                 <button class="btn btn-danger rounded-pill bg-gradient btn-lg"
                   @click="router.push({ name: 'subscribe' })">INSCREVA-SE</button>
