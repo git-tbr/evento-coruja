@@ -30,20 +30,23 @@ defineExpose({
 </script>
 
 <template>
-    <dialog id="modal" class="bg-light rounded-4 border border-secondary">
+    <dialog id="modal" class="bg-light rounded-4 border-0">
         <div class="p-3">
-            <section class="my-4">
-                <h2 class="fw-bold text-center mb-3">
+            <section class="">
+                <p class="text-center mb-1 fs-1 text-danger">
+                    <font-awesome-icon icon="fa-regular fa-circle-question" />
+                </p>
+                <p class="fw-semibold fs-4 text-center mb-3 text-dark">
                     Deseja sair?
-                </h2>
+                </p>
                 <form @submit.prevent="doLogout">
                     <div class="mt-3">
                         <div class="row">
                             <div class="col-6 d-grid">
-                                <button type="button" class="btn btn-secondary" @click="closeModal">Não</button>
+                                <button type="button" class="btn btn-secondary rounded-pill bg-gradient" @click="closeModal">Não</button>
                             </div>
                             <div class="col-6 d-grid">
-                                <button type="submit" class="btn btn-danger">Sim</button>
+                                <button type="submit" class="btn btn-danger rounded-pill bg-gradient">Sim</button>
                             </div>
                         </div>
                     </div>
@@ -55,7 +58,7 @@ defineExpose({
 
 <style lang="scss" scoped>
 ::backdrop{
-    background-image: linear-gradient(45deg, #999, #222);
+    background-color: #b8b8b8;
     opacity: 0.75;
 }
 
@@ -63,13 +66,13 @@ dialog{
     width: 100%;
     max-width: 300px;
     margin: auto;
-    animation: surgir 0.3s ease-out forwards;
+    animation: surgir 0.5s ease-out forwards;
 }
 
 @keyframes surgir {
     from{
         opacity: 0;
-        transform: translateX(20px);
+        transform: translateY(30px);
     }
 
     to{
