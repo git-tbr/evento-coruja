@@ -2,6 +2,7 @@
 import Layout from '@/layouts/outHome.vue'
 import { onMounted, reactive, ref } from 'vue';
 import countries from '@/util/countries';
+import { useSiteStore } from '@/stores/website';
 
 type formUserData = {
   cpf: string,
@@ -27,10 +28,13 @@ type formUserData = {
 
 const countryList: Object = countries
 const ip = ref<string>('')
-const urlApi = 'https://eventos.tbr.com.br/apis/subscribe/'
+const urlApi = 'https://eventos.tbr.com.br/apis/coruja/subscribe.php'
 const submit_txt = ref<string>('Fazer a minha inscrição!')
 const alertEmail = ref<string>('')
 const alertPassword = ref<string>('')
+const siteStore = useSiteStore()
+const alertType = ref<string>('alert-danger')
+const errorMessage = ref<string>('')
 
 const form = reactive<formUserData>({
   cpf: '',
@@ -94,24 +98,80 @@ const getIp = async () => {
   }
 }
 
+const sendForm = async (data: object) => {
+  submit_txt.value = 'Por favor, aguarde'
+
+  try {
+    const response = await fetch(urlApi, {
+      method: 'post',
+      headers: new Headers(),
+      body: JSON.stringify(data)
+    })
+
+    if (!response.ok) {
+      throw new Error('Ocorreu um erro, por favor entre em contato com o suporte')
+    }
+
+    const responseData = await response.json()
+
+    if (responseData.code == 0) {
+      throw new Error(responseData.msg)
+    }
+
+    const userName = `${responseData.firstname} ${responseData.lastname}`
+    const userEmail = responseData.email
+    const userId = responseData.id
+    const userCategory = responseData.subscribe_training_center
+
+    siteStore.login({
+      name: userName,
+      email: userEmail,
+      id: userId
+    })
+
+    sessionStorage.setItem('isAuthenticated', 'true')
+    sessionStorage.setItem('name', userName)
+    sessionStorage.setItem('email', userEmail)
+    sessionStorage.setItem('userid', userId)
+    sessionStorage.setItem('category', userCategory)
+    sessionStorage.setItem('enable', responseData.enable)
+
+    window.location.href = './public/checkout.html'
+
+  } catch (error) {
+    alertType.value = 'alert-danger'
+
+    if (error instanceof Error) {
+      errorMessage.value = error.message
+    } else {
+      errorMessage.value = 'Ocorreu um erro, por favor entre em contato com o suporte'
+    }
+  }
+}
+
 const handleSubmit = async () => {
   const data = {
-    dataCategory: form.,
-    dataTreatment: treatment.value,
-    dataCellphone: cellphone.value,
-    dataCpf: cpf.value,
-    dataName: name.value,
-    dataCouncilNumber: councilNumber.value,
-    dataCouncilState: councilState.value,
-    dataEmail: email.value,
-    dataOccupation: occupation.value,
-    dataInstitution: institution.value,
-    dataEvento: lojaStore.evento,
+    dataCpf: form.cpf,
+    dataTreatment: form.tratamento,
+    dataName: form.nomeCompleto,
+    dataSocialName: form.nomeSocial,
+    dataEmail: form.email,
+    dataPassword: form.senha,
+    dataCategory: form.aluno == 's' ? 1098 : 1099,
+    dataCellphone: form.celular,
+    dataOccupation: form.areaAtuacao,
+    dataEvento: siteStore.evento,
     dataIp: ip.value,
-    dataPagina: 'SBGG - Highlights AAIC 2025',
-    dataContatoTbr: contactOrganization.value,
-    dataEnable: 1,
+    dataPagina: 'Coruja - Curso Revisão Pré-Prova',
+    dataContatoTbr: form.contactOrganization,
+    dataEnable: 0,
+    dataParticipation: form.participation,
+    dataParticipationNumber: form.participationNumber,
+    dataAluno: form.aluno,
+    dataTipoCurso: form.tipoCurso,
   }
+
+  sendForm(data)
 }
 
 onMounted(async () => {
@@ -349,6 +409,13 @@ onMounted(async () => {
                   <button type="submit" class="btn btn-success rounded-pill btn-lg">
                     {{ submit_txt }}
                   </button>
+                </div>
+              </div>
+              <div class="row">
+                <div :class="['alert', 'alert-dismissible', 'fade', 'show', alertType]" role="alert"
+                  v-if="errorMessage">
+                  {{ errorMessage }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
               </div>
             </div>
