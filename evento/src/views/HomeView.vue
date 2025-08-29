@@ -199,7 +199,7 @@ const images = [
                   <div class="col-6 p-0 bg-dark d-flex flex-column rounded-bottom-start-50">
                     <div class="p-3">
                       <h5 class="fw-semibold text-center text-light">
-                        Dr. Jamil Ribeiro Cade
+                        Dra. Ana Carolina Facundo
                       </h5>
                       <p class="text-center text-light small">
                         Médica de Família e Geriatra.

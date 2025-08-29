@@ -7,6 +7,7 @@ import { useSiteStore } from '@/stores/website';
 const countryList = countries
 const ip = ref('')
 const urlApi = 'https://eventos.tbr.com.br/apis/coruja/subscribe.php'
+const externalScript = "//eventos.tbr.com.br/global/assets/intltelinput/build/js/intlTelInput.min.js"
 const submit_txt = ref('Fazer a minha inscrição!')
 const alertEmail = ref('')
 const alertPassword = ref('')
@@ -150,7 +151,52 @@ const handleSubmit = async () => {
   sendForm(data)
 }
 
+function verificaNumero(variavel = null) {
+  const phoneInputField = document.querySelector('#partial_cellphone');
+  const phoneInput = window.intlTelInput(phoneInputField, {
+    initialCountry: "br",
+    preferredCountries: ["ar", "br", "py", "us"],
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+  });
+
+  const itiClass = document.querySelectorAll('.iti');
+  itiClass.forEach(element => {
+    element.style.width = '100%'
+  });
+
+  if (variavel !== 'start') {
+    const phoneNumber = phoneInput.getNumber();
+    if (phoneInput.isValidNumber()) {
+      form.celular = phoneNumber;
+    } else {
+      alert('Número de celular com formato inválido')
+    }
+  }
+}
+
+const loadScript = () => {
+  return new Promise((resolve, reject) => {
+    const scriptElement = document.createElement('script');
+    scriptElement.src = externalScript;
+    scriptElement.async = true;
+
+    scriptElement.onload = () => {
+      console.log('Script carregado')
+      resolve();
+    };
+
+    scriptElement.onerror = (error) => {
+      console.error('Falha ao carregar o script: ', error);
+      reject(error);
+    }
+
+    document.body.appendChild(scriptElement);
+  })
+}
+
 onMounted(async () => {
+  await loadScript();
+  verificaNumero('start');
   getIp()
 })
 
@@ -231,9 +277,11 @@ onMounted(async () => {
 
                 <!-- Celular -->
                 <div class="col-md-4 align-self-end">
-                  <label for="celular" class="form-label"><span class="text-success">*</span>Celular</label>
-                  <input type="tel" v-model="form.celular" class="form-control fs-5" id="celular"
-                    placeholder="(99) 99999-9999" required>
+                  <label for="partial_cellphone" class="form-label d-block"><span class="text-success">*</span>Celular</label>
+                  <!-- <input type="tel" v-model="form.celular" class="form-control fs-5" id="celular"
+                    placeholder="(99) 99999-9999" required> -->
+                  <input type="tel" name="partial_cellphone" id="partial_cellphone" @blur="verificaNumero"
+                    maxlength="20" class="form-control fs-5" placeholder="(99)99999-9999" required>
                 </div>
               </div>
               <div class="row mb-3">
@@ -403,6 +451,8 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+@import url('//eventos.tbr.com.br/global/assets/intltelinput/build/css/intlTelInput.css');
+
 .bg-opaque-green {
   background-color: #E5EBE5 !important;
 }
