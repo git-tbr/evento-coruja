@@ -57,13 +57,13 @@ const checkEmail = () => {
   }
 }
 
-const checkPassword = () => {
-  if (form.senha !== form.confSenha) {
-    alertPassword.value = 'As senhas não conferem'
-  } else {
-    alertPassword.value = ''
-  }
-}
+// const checkPassword = () => {
+//   if (form.senha !== form.confSenha) {
+//     alertPassword.value = 'As senhas não conferem'
+//   } else {
+//     alertPassword.value = ''
+//   }
+// }
 
 const getIp = async () => {
   try {
@@ -92,7 +92,7 @@ const sendForm = async (data) => {
     const responseData = await response.json()
 
     if (responseData.code == 0) {
-      throw new Error(responseData.msg)
+      throw new Error(responseData.message)
     }
 
     const userName = `${responseData.firstname} ${responseData.lastname}`
@@ -133,7 +133,6 @@ const handleSubmit = async () => {
     dataName: form.nomeCompleto,
     dataSocialName: form.nomeSocial,
     dataEmail: form.email,
-    dataPassword: form.senha,
     dataCategory: form.aluno == 's' ? 1098 : 1099,
     dataCellphone: form.celular,
     dataOccupation: form.areaAtuacao,
@@ -308,14 +307,14 @@ onMounted(async () => {
                   </div>
                 </div>
               </div>
-              <div class="row mb-3">
-                <!-- Senha -->
+              <!-- <div class="row mb-3">
+                !-- Senha --
                 <div class="col-md-6">
                   <label for="senha" class="form-label"><span class="text-success">*</span>Senha</label>
                   <input type="password" v-model="form.senha" class="form-control fs-5" id="senha" required>
                 </div>
 
-                <!-- Confirmação de Senha -->
+                !-- Confirmação de Senha --
                 <div class="col-md-6">
                   <label for="confSenha" class="form-label"><span class="text-success">*</span>Confirme a Senha</label>
                   <input type="password" v-model="form.confSenha" class="form-control fs-5" id="confSenha"
@@ -324,7 +323,7 @@ onMounted(async () => {
                     {{ alertPassword }}
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div class="row pt-3 mb-3">
                 <div class="col">
                   <p class="fs-5 mb-0 fw-semibold">
