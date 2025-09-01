@@ -1,15 +1,6 @@
 <script setup>
 import Layout from '@/layouts/outHomeLayout.vue';
-import router from '@/router';
-import { onMounted } from 'vue';
-
-onMounted(()=>{
-  if(sessionStorage.getItem('enable') == 0){
-    router.push({
-      path: '/payment'
-    })
-  }
-})
+sessionStorage.setItem('enable', 1)
 </script>
 
 <template>
@@ -23,6 +14,9 @@ onMounted(()=>{
           </h2>
           <p class="fs-5 text-center text-principal">
             O evento será transmitido ao vivo nos dias 07, 08 e 09 de novembro de 2025
+          </p>
+          <p class="pt-3 fs-4 text-center">
+            <b>Seu pagamento foi realizado com sucesso!</b>
           </p>
         </article>
       </section>

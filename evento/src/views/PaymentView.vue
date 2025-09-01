@@ -13,8 +13,8 @@ const url = "https://pagamentos.tbr.com.br/stripe/public/create_session.php"
 
 //const alertType = ref('alert-danger')
 const errorMessage = ref()
-const urlsucesso = "https://eventos.tbr.com.br/coruja-crpp2025/complete.php";
-const urlcancelado = "https://eventos.tbr.com.br/coruja-crpp2025/cancelado.php";
+const urlsucesso = "https://eventos.tbr.com.br/coruja-crpp2025/#/sucesso?";
+const urlcancelado = "https://eventos.tbr.com.br/coruja-crpp2025/";
 const linkPagamento = ref()
 //var stripe, elements;
 

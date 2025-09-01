@@ -1,26 +1,26 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useSiteStore } from '@/stores/website';
-//import LogoutComponent from './LogoutComponent.vue';
-import MessageModalComponent from './MessageModalComponent.vue';
+import LogoutComponent from './LogoutComponent.vue';
+//import MessageModalComponent from './MessageModalComponent.vue';
 import { RouterLink } from 'vue-router';
 
 const navClasses = ref('navbar navbar-expand-lg shadow bg-light')
-//const compLogout = ref(null)
+const compLogout = ref(null)
 const siteStore = useSiteStore()
-const compMessage = ref(null)
+//const compMessage = ref(null)
 
-const showMessage = () => {
-  if(compMessage.value){
-    compMessage.value.showModal('As inscrições serão abertas em 01/09/2025', 'Ok')
-  }
-}
-
-// const doLogoutComponent = () => {
-//     if(compLogout.value){
-//         compLogout.value.showModal()
-//     }
+// const showMessage = () => {
+//   if(compMessage.value){
+//     compMessage.value.showModal('As inscrições serão abertas em 01/09/2025', 'Ok')
+//   }
 // }
+
+const doLogoutComponent = () => {
+    if(compLogout.value){
+        compLogout.value.showModal()
+    }
+}
 
 const onScroll = () => {
   window.addEventListener('scroll', function(){
@@ -63,15 +63,18 @@ onMounted(()=>{
             <li class="nav-item ms-lg-4">
               <RouterLink to="#professors" class="nav-link fw-semibold">Professores</RouterLink>
             </li>
-            <li class="nav-item ms-lg-4 d-grid">
-              <!-- <RouterLink to="/subscribe" class="btn btn-success bg-gradient fw-semibold rounded-pill px-3 mb-3 mb-lg-0">Inscreva-se</RouterLink> -->
-               <a href="javascript:void(0)" @click="showMessage" class="btn btn-success bg-gradient fw-semibold rounded-pill px-3 mb-3 mb-lg-0">
-                Inscreva-se
-              </a>
+            <li class="nav-item ms-lg-3 d-grid" v-if="siteStore.isAuthenticated">
+              <RouterLink to="/live" class="btn btn-success bg-gradient fw-semibold rounded-pill px-3 mb-3 mb-lg-0">Assista Ao vivo</RouterLink>
             </li>
-            <!-- <li class="nav-item ms-lg-3 d-grid">
+            <li class="nav-item ms-lg-4 d-grid" v-if="!siteStore.isAuthenticated">
+              <RouterLink to="/subscribe" class="btn btn-success bg-gradient fw-semibold rounded-pill px-3 mb-3 mb-lg-0">Inscreva-se</RouterLink>
+               <!-- <a href="javascript:void(0)" @click="showMessage" class="btn btn-success bg-gradient fw-semibold rounded-pill px-3 mb-3 mb-lg-0">
+                Inscreva-se
+              </a> -->
+            </li>
+            <li class="nav-item ms-lg-3 d-grid" v-if="!siteStore.isAuthenticated">
               <RouterLink to="/login" class="btn btn-success bg-gradient fw-semibold rounded-pill px-3">Login</RouterLink>
-            </li> -->
+            </li>
             <li class="nav-item ms-lg-3 d-grid" v-if="siteStore.isAuthenticated">
               <a href="javascript:void(0)" @click="doLogoutComponent" class="btn btn-success bg-gradient fw-semibold rounded-pill px-3 my-3 my-lg-0">
                 Sair
@@ -83,8 +86,8 @@ onMounted(()=>{
     </nav>
     </header>
 
-    <!-- <LogoutComponent ref="compLogout" /> -->
-    <MessageModalComponent ref="compMessage" />
+    <LogoutComponent ref="compLogout" />
+    <!-- <MessageModalComponent ref="compMessage" /> -->
 </template>
 
 <style lang="scss" scoped>

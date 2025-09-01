@@ -94,14 +94,14 @@ const sendForm = async (data) => {
 
     const responseData = await response.json()
 
-    if (responseData.code == 0) {
+    if (responseData.dados.code == 0) {
       throw new Error(responseData.message)
     }
 
-    const userName = `${responseData.firstname} ${responseData.lastname}`
-    const userEmail = responseData.email
-    const userId = responseData.id
-    const userCategory = responseData.subscribe_training_center
+    const userName = `${responseData.dados.firstname} ${responseData.dados.lastname}`
+    const userEmail = responseData.dados.email
+    const userId = responseData.dados.id
+    const userCategory = responseData.dados.subscribe_training_center
 
     siteStore.login({
       name: userName,
@@ -114,7 +114,7 @@ const sendForm = async (data) => {
     sessionStorage.setItem('email', userEmail)
     sessionStorage.setItem('userid', userId)
     sessionStorage.setItem('category', userCategory)
-    sessionStorage.setItem('enable', responseData.enable)
+    sessionStorage.setItem('enable', responseData.dados.enable)
 
     //window.location.href = './public/checkout.html'
     router.push({

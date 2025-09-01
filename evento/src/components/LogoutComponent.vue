@@ -15,6 +15,7 @@ const doLogout = () => {
     router.push({
         name: 'home'
     })
+    closeModal()
 }
 
 const showModal = () => {

@@ -9,7 +9,8 @@ export const useSiteStore = defineStore('siteStore', {
     evento: 384,
     company: 22,
     pagamentoAluno: 'price_1S2XuWGmwrpUlslz56gjFokn',
-    pagamentoNovo: 'price_1S2XgJGmwrpUlslzI2ZBHIGd'
+    //pagamentoNovo: 'price_1S2XgJGmwrpUlslzI2ZBHIGd',
+    pagamentoNovo: 'price_1S2ZKEGmwrpUlslzZOb4yai7',
   }),
   actions: {
     login(userData) {

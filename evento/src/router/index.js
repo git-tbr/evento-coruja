@@ -30,6 +30,11 @@ const router = createRouter({
       name: 'live',
       component: () => import('../views/LiveView.vue'),
     },
+    {
+      path: '/sucesso',
+      name: 'sucesso',
+      component: () => import('../views/SuccessView.vue'),
+    },
 
     /*
     {

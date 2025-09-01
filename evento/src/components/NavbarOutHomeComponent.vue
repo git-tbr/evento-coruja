@@ -55,10 +55,13 @@ onMounted(()=>{
             <li class="nav-item ms-lg-4">
               <RouterLink to="/#professors" class="nav-link fw-semibold">Professores</RouterLink>
             </li>
-            <li class="nav-item ms-lg-4 d-grid">
+            <li class="nav-item ms-lg-3 d-grid" v-if="siteStore.isAuthenticated">
+              <RouterLink to="/live" class="btn btn-success bg-gradient fw-semibold rounded-pill px-3 mb-3 mb-lg-0">Assista Ao vivo</RouterLink>
+            </li>
+            <li class="nav-item ms-lg-4 d-grid" v-if="!siteStore.isAuthenticated">
               <RouterLink to="/subscribe" class="btn btn-success bg-gradient fw-semibold rounded-pill px-3 mb-3 mb-lg-0">Inscreva-se</RouterLink>
             </li>
-            <li class="nav-item ms-lg-3 d-grid">
+            <li class="nav-item ms-lg-3 d-grid" v-if="!siteStore.isAuthenticated">
               <RouterLink to="/login" class="btn btn-success bg-gradient fw-semibold rounded-pill px-3">Login</RouterLink>
             </li>
             <li class="nav-item ms-lg-3 d-grid" v-if="siteStore.isAuthenticated">
