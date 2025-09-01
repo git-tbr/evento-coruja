@@ -41,11 +41,11 @@ const images = [
             </p>
             <p class="text-light fw-semibold fs-2 fs-lg-1 mb-0">
               <font-awesome-icon icon="fa-regular fa-clock" />
-              8:30h às 18:30h (Horário de Lisboa)
+              8:00h às 18:30h (Horário de Lisboa)
             </p>
             <p class="text-light fw-semibold fs-2 fs-lg-1 mb-0">
               <font-awesome-icon icon="fa-regular fa-clock" />
-              5:30h às 15:30h (Horário de Brasília)
+              5:00h às 15:30h (Horário de Brasília)
             </p>
             <p class="text-light mb-3">
               Para converter seu horário, clique <a target="_blank" href="https://24timezones.com/difference/" class="text-decoration-none text-light fw-bold">aqui</a>
