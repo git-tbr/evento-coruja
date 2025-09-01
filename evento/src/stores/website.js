@@ -8,6 +8,8 @@ export const useSiteStore = defineStore('siteStore', {
     tbread: 1022,
     evento: 384,
     company: 22,
+    pagamentoAluno: 'price_1S2XuWGmwrpUlslz56gjFokn',
+    pagamentoNovo: 'price_1S2XgJGmwrpUlslzI2ZBHIGd'
   }),
   actions: {
     login(userData) {

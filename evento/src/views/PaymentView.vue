@@ -8,12 +8,17 @@ const userId = ref()
 const company = ref()
 const evento = ref()
 const email = ref()
-const url = "https://pagamentos.tbr.com.br/stripe/public/create.php"
-const alertType = ref('alert-danger')
-const errorMessage = ref()
-const returnUrl = "https://eventos.tbr.com.br/coruja-crpp2025/complete.php";
-var stripe, elements;
+const valor = sessionStorage.getItem('categoria') == 1098 ? "80,00" : "200,00"
+const url = "https://pagamentos.tbr.com.br/stripe/public/create_session.php"
 
+//const alertType = ref('alert-danger')
+const errorMessage = ref()
+const urlsucesso = "https://eventos.tbr.com.br/coruja-crpp2025/complete.php";
+const urlcancelado = "https://eventos.tbr.com.br/coruja-crpp2025/cancelado.php";
+const linkPagamento = ref()
+//var stripe, elements;
+
+/*
 function showMessage(messageText) {
   const messageContainer = document.querySelector("#payment-message");
 
@@ -61,6 +66,7 @@ async function handleSubmit(e) {
 
   setLoading(false);
 }
+*/
 
 //config payment
 const configPayment = async () => {
@@ -72,6 +78,11 @@ const configPayment = async () => {
         userid: userId.value,
         company: company.value,
         descricao: 'Pagamento da taxa de inscrição do Curso Revisão Pré-Prova',
+        urlsucesso,
+        urlcancelado,
+        produtoAluno: siteStore.pagamentoAluno,
+        produtoNovo: siteStore.pagamentoNovo,
+        categoria: sessionStorage.getItem('categoria') == 1098 ? "aluno" : "novo"
       })
     })
 
@@ -85,6 +96,7 @@ const configPayment = async () => {
       throw new Error(responseData.error)
     }
 
+    /*
     //configuração do pagamento
     elements = stripe.elements(responseData.clientSecret)
     const paymentElementOptions = {
@@ -95,10 +107,11 @@ const configPayment = async () => {
     paymentElement.mount("#payment-element")
 
     document.querySelector("#payment-form").addEventListener("submit", handleSubmit);
+    */
+
+    linkPagamento.value = responseData.url
 
   } catch (error) {
-    alertType.value = 'alert-danger'
-
     if (error instanceof Error) {
       errorMessage.value = error.message
     } else {
@@ -107,6 +120,11 @@ const configPayment = async () => {
   }
 }
 
+const openLink = () => {
+  window.location.href = linkPagamento.value
+}
+
+/*
 //carregando o script base do stripe
 const loadScript = async (src) => {
   const script = document.createElement('script')
@@ -120,6 +138,7 @@ const loadScript = async (src) => {
   }
   document.body.appendChild(script)
 }
+*/
 
 onMounted(async () => {
   userId.value = siteStore.userid
@@ -127,7 +146,7 @@ onMounted(async () => {
   evento.value = siteStore.evento
   email.value = siteStore.email
 
-  await loadScript('https://js.stripe.com/basil/stripe.js')
+  //await loadScript('https://js.stripe.com/basil/stripe.js')
   await configPayment()
 })
 
@@ -140,7 +159,22 @@ onMounted(async () => {
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-auto">
-            <form id="payment-form" class="bg-light">
+            <h4 class="text-center fw-semibold text-danger">Curso Revisão Pré-Prova</h4>
+            <p class="text-center fw-semibold">
+              Valor da taxa de inscrição: &euro; {{ valor }}
+            </p>
+
+            <button class="btn btn-lg btn-success rounded-pill" v-if="linkPagamento" @click="openLink()">
+              Pagar Agora
+            </button>
+
+            <p class="text-center text-danger" v-if="errorMessage">
+              Não foi possível gerar seu pagamento, por favor entre em contato com o suporte.
+              <br>
+              Motivo: {{ errorMessage }}
+            </p>
+            
+            <!-- <form id="payment-form" class="bg-light">
               <h3 class="text-center text-danger fs-semibold mb-3">Curso Revisão Pré-Prova</h3>
               <input type="text" id="email" placeholder="Seu email" />
               <div id="payment-element">
@@ -151,7 +185,8 @@ onMounted(async () => {
               </button>
               <div id="payment-message" class="hidden"></div>
               <input type="hidden" id="sk" value="<?= $stripeSecretKey ?>">
-            </form>
+            </form> -->
+
           </div>
         </div>
       </div>
