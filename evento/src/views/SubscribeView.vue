@@ -3,14 +3,17 @@ import Layout from '@/layouts/outHomeLayout.vue'
 import { onMounted, reactive, ref } from 'vue';
 import countries from '@/util/countries';
 import { useSiteStore } from '@/stores/website';
+import { useRouter } from 'vue-router';
 
+
+const router = useRouter();
 const countryList = countries
 const ip = ref('')
 const urlApi = 'https://eventos.tbr.com.br/apis/coruja/subscribe.php'
 const externalScript = "//eventos.tbr.com.br/global/assets/intltelinput/build/js/intlTelInput.min.js"
 const submit_txt = ref('Fazer a minha inscrição!')
 const alertEmail = ref('')
-const alertPassword = ref('')
+// const alertPassword = ref('')
 const siteStore = useSiteStore()
 const alertType = ref('alert-danger')
 const errorMessage = ref('')
@@ -113,7 +116,10 @@ const sendForm = async (data) => {
     sessionStorage.setItem('category', userCategory)
     sessionStorage.setItem('enable', responseData.enable)
 
-    window.location.href = './public/checkout.html'
+    //window.location.href = './public/checkout.html'
+    router.push({
+      path: '/payment'
+    })
 
   } catch (error) {
     alertType.value = 'alert-danger'
@@ -132,6 +138,8 @@ const handleSubmit = async () => {
     dataTreatment: form.tratamento,
     dataName: form.nomeCompleto,
     dataSocialName: form.nomeSocial,
+    dataPais: form.pais,
+    dataCidade: form.cidade,
     dataEmail: form.email,
     dataCategory: form.aluno == 's' ? 1098 : 1099,
     dataCellphone: form.celular,
@@ -145,6 +153,7 @@ const handleSubmit = async () => {
     dataParticipationNumber: form.participationNumber,
     dataAluno: form.aluno,
     dataTipoCurso: form.tipoCurso,
+    dataCursoRealizado: form.cursoRealizado,
   }
 
   sendForm(data)
