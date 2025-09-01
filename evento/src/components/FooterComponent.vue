@@ -20,7 +20,7 @@ const instagram = ref('https://www.instagram.com/coruja_mentoria/')
                             <ul class="list-unstyled">
                                 <li>
                                     <a href="tel:+5511947990277" class="text-decoration-none text-light">
-                                        <font-awesome-icon icon="fa-solid fa-phone" /> (11) 9 4799-0277
+                                        <font-awesome-icon icon="fa-solid fa-phone" /> +55 11 94799-0277
                                     </a>
                                 </li>
                                 <li>
@@ -53,8 +53,6 @@ const instagram = ref('https://www.instagram.com/coruja_mentoria/')
                 </div>
             </div>
         </div>
-
-
     </footer>
 </template>
 

@@ -8,7 +8,7 @@ const userId = ref()
 const company = ref()
 const evento = ref()
 const email = ref()
-const valor = sessionStorage.getItem('categoria') == 1098 ? "80,00" : "200,00"
+const valor = sessionStorage.getItem('categoria') == 1098 ? "90,00" : "210,00"
 const url = "https://pagamentos.tbr.com.br/stripe/public/create_session.php"
 
 //const alertType = ref('alert-danger')
@@ -159,14 +159,20 @@ onMounted(async () => {
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-auto">
-            <h4 class="text-center fw-semibold text-danger">Curso Revisão Pré-Prova</h4>
-            <p class="text-center fw-semibold">
+            <h2 class="text-center fw-semibold text-danger">Curso Revisão Pré-Prova</h2>
+            <p class="text-center fw-semibold fs-5">
               Valor da taxa de inscrição: &euro; {{ valor }}
             </p>
 
             <button class="btn btn-lg btn-success rounded-pill" v-if="linkPagamento" @click="openLink()">
               Pagar Agora
             </button>
+
+            <P class="text-center fs-5 py-3">
+              Caso tenha problemas com o pagamento, entre em contato com o suporte:
+              <a class="fs-5 text-decoration-none fw-semibold text-dark pt-2" href="tel:+5511947990277" target="_blank"><font-awesome-icon icon="fa-solid fa-phone" /> +55 11 94799-0277</a> 
+              <a class="fs-5 fw-semibold text-success text-decoration-none py-2" href="https://wa.me/5511947990277" target="_blank"><font-awesome-icon icon="fa-brands fa-whatsapp" /> Whatsapp</a>
+            </P>
 
             <p class="text-center text-danger" v-if="errorMessage">
               Não foi possível gerar seu pagamento, por favor entre em contato com o suporte.

@@ -3,7 +3,7 @@ import { faCalendarCheck, faCircleQuestion, faClock, faEnvelope } from "@fortawe
 import { faEye, faEyeSlash, faPhone, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 const icons = [
-    faInstagram, faLinkedin, faXTwitter, faYoutube, faFacebook, faWhatsapp, faCalendarCheck, faClock, faEnvelope, faPhone, faEye, faEyeSlash, faCircleQuestion, faTriangleExclamation
+    faInstagram, faLinkedin, faXTwitter, faYoutube, faFacebook, faWhatsapp, faCalendarCheck, faClock, faEnvelope, faPhone, faEye, faEyeSlash, faCircleQuestion, faTriangleExclamation, faPhone, faWhatsapp
 ];
 
 export default icons;

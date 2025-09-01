@@ -237,7 +237,7 @@ onMounted(async () => {
                 <div class="col-md-6 col-lg-3 align-self-end">
                   <label for="cpf" class="form-label">CPF(Somente Brasileiros)</label>
                   <input type="text" v-model="form.cpf" class="form-control fs-5" id="cpf" @keyup="cpfFormat"
-                    placeholder="999.999.999-99" required>
+                    placeholder="999.999.999-99" >
                 </div>
 
                 <!-- Tratamento -->

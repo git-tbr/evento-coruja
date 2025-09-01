@@ -63,6 +63,9 @@ onMounted(()=>{
             <li class="nav-item ms-lg-4">
               <RouterLink to="#professors" class="nav-link fw-semibold">Professores</RouterLink>
             </li>
+            <li class="nav-item ms-lg-4">
+              <RouterLink to="/suporte" class="nav-link fw-semibold">Suporte</RouterLink>
+            </li>
             <li class="nav-item ms-lg-3 d-grid" v-if="siteStore.isAuthenticated">
               <RouterLink to="/live" class="btn btn-success bg-gradient fw-semibold rounded-pill px-3 mb-3 mb-lg-0">Assista Ao vivo</RouterLink>
             </li>

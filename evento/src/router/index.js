@@ -35,6 +35,11 @@ const router = createRouter({
       name: 'sucesso',
       component: () => import('../views/SuccessView.vue'),
     },
+    {
+      path: '/suporte',
+      name: 'suporte',
+      component: () => import('../views/SupportView.vue'),
+    },
 
     /*
     {

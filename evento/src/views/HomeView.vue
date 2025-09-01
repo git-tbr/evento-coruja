@@ -1,5 +1,7 @@
 <script setup>
 import Layout from '@/layouts/defaultLayout.vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 import img01 from '../assets/img/img_01.jpg'
 import img02 from '../assets/img/img_02.jpg'
@@ -33,16 +35,23 @@ const images = [
             <h1 class="rt-h1 fw-semibold text-light mb-5">
               Curso Revisão Pré-Prova
             </h1>
-            <p class="text-light fw-semibold fs-2 fs-lg-1">
+            <p class="text-light fw-semibold fs-2 fs-lg-1 mb-0">
               <font-awesome-icon icon="fa-regular fa-calendar-check" />
               07, 08 e 09 de novembro
             </p>
-            <p class="text-light fw-semibold fs-2 fs-lg-1">
+            <p class="text-light fw-semibold fs-2 fs-lg-1 mb-0">
               <font-awesome-icon icon="fa-regular fa-clock" />
-              08h00 às 17h00
+              8:30h às 18:30h (Horário de Lisboa)
             </p>
-            <p class="text-center text-light mb-0">
-              As inscrições serão abertas dia 01/09/2025!
+            <p class="text-light fw-semibold fs-2 fs-lg-1 mb-0">
+              <font-awesome-icon icon="fa-regular fa-clock" />
+              5:30h às 15:30h (Horário de Brasília)
+            </p>
+            <p class="text-light mb-3">
+              Para converter seu horário, clique <a target="_blank" href="https://24timezones.com/difference/" class="text-decoration-none text-light fw-bold">aqui</a>
+            </p>
+            <p class="text-center text-light fs-4">
+              O curso será gravado e ficará disponível para acesso posterior.
             </p>
           </div>
         </div>
@@ -207,6 +216,8 @@ const images = [
                         Supervisora do PMMB e professora de pós-graduação em MFC.
                         <br>
                         Aprovada com 17 em 20 valores na revalidação em Portugal.
+                        <br>
+                        Atualmente exerce a medicina em Portugal como Clínica Geral.
                       </p>
                     </div>
                   </div>
@@ -238,15 +249,15 @@ const images = [
                 <b>Investimento:</b>
                 <br>
                 <span class="fst-italic">
-                Ex-alunos: 80&euro; (2,96&euro;/hora-aula)
+                Ex-alunos: 90&euro; (30&euro;/dia)
                 <br>
-                Alunos-novos: 200&euro; (7,4&euro;/hora-aula)
+                Alunos-novos: 210&euro; (70&euro;/dia)
                 </span>
               </p>
-              <!-- <div class="d-grid my-5">
+              <div class="d-grid my-5">
                 <button class="btn btn-danger rounded-pill bg-gradient btn-lg"
                   @click="router.push({ name: 'subscribe' })">INSCREVA-SE</button>
-              </div> -->
+              </div>
             </div>
             <div class="col-lg-6 d-none d-lg-flex">
               <img src="../assets/img/paper-airplane.png" alt="avião de papel" class="w-100">
