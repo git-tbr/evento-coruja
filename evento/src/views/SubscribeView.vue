@@ -96,7 +96,7 @@ const sendForm = async (data) => {
 
     const responseData = await response.json()
 
-    if (responseData.dados.code == 0) {
+    if (responseData.code == 0) {
       throw new Error(responseData.message)
     }
 
