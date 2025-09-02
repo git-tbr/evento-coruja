@@ -10,6 +10,7 @@ export const useSiteStore = defineStore('siteStore', {
     company: 22,
     pagamentoAluno: 'price_1S2c5KGmwrpUlslznbbh3Ot0',
     pagamentoNovo: 'price_1S2c6OGmwrpUlslzEj4P52FI',
+    pagamentoDesconto: 'price_1S2ySgGmwrpUlslzPnlxv4fY',
   }),
   actions: {
     login(userData) {

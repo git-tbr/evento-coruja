@@ -66,11 +66,7 @@ const images = [
                 Sobre nós
               </h2>
               <p class="fs-5">
-                O CoruJÁ – Curso Revisão Pré-Prova é um intensivo preparatório para a prova de revalidação médica e para
-                a Prova Nacional de Acesso (PNA) ao internato médico em Portugal, que acontecerão nos dias 17 e 26 de
-                novembro de 202, respectivamente. Realizado nos dias 07, 08 e 09 de novembro, no Hotel Íbis Porto São
-                João (Rua Dr. Plácido da Costa, 4200-450 Porto), o curso oferece aulas ao vivo, no formato híbrido:
-                presenciais e transmitidas on-line pela plataforma da TBR. Com programação das 08:30h às 18:30h,
+                O CoruJÁ – Curso Revisão Pré-Prova é um intensivo preparatório para a prova de revalidação médica e para a Prova Nacional de Acesso (PNA) ao internato médico em Portugal, que acontecerão nos dias 17 e 26 de novembro de 202, respectivamente. Realizado nos dias 07, 08 e 09 de novembro, no Hotel Íbis Porto São João (Rua Dr. Plácido da Costa, 4200-450 Porto), o curso oferece aulas ao vivo, no formato híbrido: presenciais e transmitidas on-line pela plataforma da TBR. Com programação das 08:30h às 18:30h (Horário de Lisboa),
                 proporciona uma revisão completa e focada para garantir o melhor desempenho nos exames.
               </p>
             </div>
@@ -244,9 +240,11 @@ const images = [
               </p>
               <p class="fs-5 fw-semibold text-light">
                 Garanta sua vaga agora!
+                <br>
+                <b>As vagas presenciais são limitadas e serão preenchidas por ordem de chegada</b>
               </p>
               <p class="fs-5 text-light">
-                <b>Investimento:</b>
+                <b>Investimento:</b>                
                 <br>
                 <span class="fst-italic">
                 Ex-alunos: 90&euro; (30&euro;/dia)

@@ -8,7 +8,9 @@ const userId = ref()
 const company = ref()
 const evento = ref()
 const email = ref()
-const valor = sessionStorage.getItem('categoria') == 1098 ? "90,00" : "210,00"
+const cat = ref()
+const valor = ref()
+
 const url = "https://pagamentos.tbr.com.br/stripe/public/create_session.php"
 
 //const alertType = ref('alert-danger')
@@ -82,7 +84,8 @@ const configPayment = async () => {
         urlcancelado,
         produtoAluno: siteStore.pagamentoAluno,
         produtoNovo: siteStore.pagamentoNovo,
-        categoria: sessionStorage.getItem('categoria') == 1098 ? "aluno" : "novo"
+        produtoDesconto: siteStore.pagamentoDesconto,
+        categoria: cat
       })
     })
 
@@ -146,10 +149,20 @@ onMounted(async () => {
   evento.value = siteStore.evento
   email.value = siteStore.email
 
+  if(sessionStorage.getItem('categoria') == 1098){
+    cat.value = 'aluno'
+    valor.value = '90,00'
+  }else if(sessionStorage.getItem('categoria') == 1099){
+    cat.value = 'novo'
+    valor.value = '210,00'
+  }else{
+    cat.value = 'cupom'
+    valor.value = '199,50'
+  }
+
   //await loadScript('https://js.stripe.com/basil/stripe.js')
   await configPayment()
 })
-
 
 </script>
 
@@ -160,7 +173,14 @@ onMounted(async () => {
         <div class="row justify-content-center">
           <div class="col-auto">
             <h2 class="text-center fw-semibold text-danger">Curso Revisão Pré-Prova</h2>
-            <p class="text-center fw-semibold fs-5">
+            <p class="text-center fw-semibold fs-5" v-if="valor == '199,50'">
+              Valor da taxa de inscrição: &euro; 210,00
+              <br>
+              Cupom de desconto: &euro; 10,50
+              <br>
+              Valor a pagar: &euro; 199,50
+            </p>
+            <p class="text-center fw-semibold fs-5" v-else>
               Valor da taxa de inscrição: &euro; {{ valor }}
             </p>
 
@@ -178,21 +198,7 @@ onMounted(async () => {
               Não foi possível gerar seu pagamento, por favor entre em contato com o suporte.
               <br>
               Motivo: {{ errorMessage }}
-            </p>
-            
-            <!-- <form id="payment-form" class="bg-light">
-              <h3 class="text-center text-danger fs-semibold mb-3">Curso Revisão Pré-Prova</h3>
-              <input type="text" id="email" placeholder="Seu email" />
-              <div id="payment-element">
-              </div>
-              <button id="submit">
-                <div class="spinner hidden" id="spinner"></div>
-                <span id="button-text">Pagar Agora</span>
-              </button>
-              <div id="payment-message" class="hidden"></div>
-              <input type="hidden" id="sk" value="<?= $stripeSecretKey ?>">
-            </form> -->
-
+            </p>            
           </div>
         </div>
       </div>

@@ -17,6 +17,7 @@ const alertEmail = ref('')
 const siteStore = useSiteStore()
 const alertType = ref('alert-danger')
 const errorMessage = ref('')
+const cupomDesconto = ref(true)
 
 const form = reactive({
   cpf: '',
@@ -37,7 +38,8 @@ const form = reactive({
   tipoCurso: '',
   cursoRealizado: '',
   contactOrganization: '',
-  veracity: ''
+  veracity: '',
+  cupom: '',
 })
 
 const cpfFormat = (evt) => {
@@ -154,6 +156,7 @@ const handleSubmit = async () => {
     dataAluno: form.aluno,
     dataTipoCurso: form.tipoCurso,
     dataCursoRealizado: form.cursoRealizado,
+    dataCupomDesconto: form.cupom,
   }
 
   sendForm(data)
@@ -229,12 +232,21 @@ onMounted(async () => {
             <p class="text-success small fw-semibold">
               Campos obrigatórios *
             </p>
+            <p class="text-small" v-if="cupomDesconto">
+              Validade do cupom: de 02/09/2025 a partir das 21:00h até 03/09/2025 às 23:00h (Hora de Lisboa)
+            </p>
           </div>
         </div>
 
         <form @submit.prevent="handleSubmit" class="row">
           <div class="col-12">
             <div class="container px-0">
+              <div class="row mb-3" v-if="cupomDesconto">
+                <div class="col-md-6">
+                  <label for="cupomDesconto">Cupom de desconto:</label>
+                  <input type="text" v-model="form.cupom" class="form-control fs-5" id="cupomDesconto">
+                </div>
+              </div>
               <div class="row mb-3">
                 <!-- CPF -->
                 <div class="col-md-6 col-lg-3 align-self-end">
