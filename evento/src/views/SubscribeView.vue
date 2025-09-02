@@ -219,6 +219,9 @@ onMounted(async () => {
             <h2 class="display-5 fw-bold text-center text-darkgreen">
               INSCRIÇÃO
             </h2>
+            <p class="text-center fs-5">
+              As vagas presenciais são limitadas e serão preenchidas por ordem de chegada
+            </p>
           </div>
         </div>
         <div class="row">
@@ -372,14 +375,14 @@ onMounted(async () => {
                   <div class="form-group">
                     <div class="form-check form-check-inline">
                       <input class="form-check-input rounded-1 fs-5" type="radio" name="aluno" id="alunoMentoria1"
-                        v-model="form.aluno" value="SIM">
+                        v-model="form.aluno" value="s">
                       <label class="form-check-label fs-5" for="alunoMentoria1">
                         Sim
                       </label>
                     </div>
                     <div class="form-check form-check-inline">
                       <input class="form-check-input rounded-1 fs-5" type="radio" name="aluno" id="alunoMentoria2"
-                        v-model="form.aluno" value="NAO">
+                        v-model="form.aluno" value="n">
                       <label class="form-check-label fs-5" for="alunoMentoria2">
                         Não
                       </label>
@@ -418,7 +421,7 @@ onMounted(async () => {
               <div class="row py-3 g-1">
                 <div class="col-12">
                   <div class="form-check">
-                    <input class="form-check-input fs-5" type="checkbox" value="S" id="contactOrganization"
+                    <input class="form-check-input fs-5" type="checkbox" value="s" id="contactOrganization"
                       v-model="form.contactOrganization">
                     <label class="form-check-label fs-5 fw-semibold" for="contactOrganization">
                       Aceito receber informações de eventos conforme apresentado na política de privacidade da TBR;
@@ -427,10 +430,10 @@ onMounted(async () => {
                 </div>
                 <div class="col-12">
                   <div class="form-check">
-                    <input class="form-check-input fs-5" type="checkbox" value="S" id="veracity" v-model="form.veracity"
+                    <input class="form-check-input fs-5" type="checkbox" value="s" id="veracity" v-model="form.veracity"
                       required>
                     <label class="form-check-label fs-5 fw-semibold" for="veracity">
-                      Declaro, para os devidos fins, a veracidade das informações preenchidas.
+                      Declaro que as informações aqui prestadas são verdadeiras.
                     </label>
                   </div>
                 </div>
