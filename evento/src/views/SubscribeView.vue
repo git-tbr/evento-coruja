@@ -135,6 +135,7 @@ const sendForm = async (data) => {
 }
 
 const handleSubmit = async () => {
+  document.getElementById('btnSubmit').disabled = true;
   const data = {
     dataCpf: form.cpf,
     dataTreatment: form.tratamento,
@@ -453,7 +454,7 @@ onMounted(async () => {
               <div class="row py-3">
                 <!-- Submit button -->
                 <div class="col-6 col-md-4 col-lg-3 d-grid mx-auto">
-                  <button type="submit" class="btn btn-success rounded-pill btn-lg">
+                  <button type="submit" id="btnSubmit" class="btn btn-success rounded-pill btn-lg">
                     {{ submit_txt }}
                   </button>
                 </div>
