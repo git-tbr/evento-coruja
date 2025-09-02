@@ -113,7 +113,7 @@ const sendForm = async (data) => {
     sessionStorage.setItem('name', userName)
     sessionStorage.setItem('email', userEmail)
     sessionStorage.setItem('userid', userId)
-    sessionStorage.setItem('category', userCategory)
+    sessionStorage.setItem('categoria', userCategory)
     sessionStorage.setItem('enable', responseData.dados.enable)
 
     //window.location.href = './public/checkout.html'
