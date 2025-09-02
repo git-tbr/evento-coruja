@@ -85,7 +85,7 @@ const configPayment = async () => {
         produtoAluno: siteStore.pagamentoAluno,
         produtoNovo: siteStore.pagamentoNovo,
         produtoDesconto: siteStore.pagamentoDesconto,
-        categoria: cat
+        categoria: cat.value
       })
     })
 
