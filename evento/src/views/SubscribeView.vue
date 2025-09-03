@@ -4,13 +4,13 @@ import { onMounted, reactive, ref } from 'vue';
 import countries from '@/util/countries';
 import { useSiteStore } from '@/stores/website';
 import { useRouter } from 'vue-router';
-
+//import { VueTelInput } from 'vue-tel-input';
+//import '../../node_modules/vue-tel-input/dist/vue-tel-input.css';
 
 const router = useRouter();
 const countryList = countries
 const ip = ref('')
 const urlApi = 'https://eventos.tbr.com.br/apis/coruja/subscribe.php'
-const externalScript = "//eventos.tbr.com.br/global/assets/intltelinput/build/js/intlTelInput.min.js"
 const submit_txt = ref('Fazer a minha inscrição!')
 const alertEmail = ref('')
 // const alertPassword = ref('')
@@ -18,6 +18,18 @@ const siteStore = useSiteStore()
 const alertType = ref('alert-danger')
 const errorMessage = ref('')
 const cupomDesconto = ref(true)
+
+/*
+//celular
+const phoneNumber = ref('');
+const validationInfo = ref(null);
+
+const onValidate = (info) => {
+  validationInfo.value = info;
+  console.log('Informações de validação:', info);
+  form.celular = info.number;
+};
+*/
 
 const form = reactive({
   cpf: '',
@@ -163,52 +175,27 @@ const handleSubmit = async () => {
   sendForm(data)
 }
 
-function verificaNumero(variavel = null) {
-  const phoneInputField = document.querySelector('#partial_cellphone');
-  const phoneInput = window.intlTelInput(phoneInputField, {
-    initialCountry: "br",
-    preferredCountries: ["ar", "br", "py", "us"],
-    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-  });
+// const loadScript = () => {
+//   return new Promise((resolve, reject) => {
+//     const scriptElement = document.createElement('script');
+//     scriptElement.src = externalScript;
+//     scriptElement.async = true;
 
-  const itiClass = document.querySelectorAll('.iti');
-  itiClass.forEach(element => {
-    element.style.width = '100%'
-  });
+//     scriptElement.onload = () => {
+//       console.log('Script carregado')
+//       resolve();
+//     };
 
-  if (variavel !== 'start') {
-    const phoneNumber = phoneInput.getNumber();
-    if (phoneInput.isValidNumber()) {
-      form.celular = phoneNumber;
-    } else {
-      alert('Número de celular com formato inválido')
-    }
-  }
-}
+//     scriptElement.onerror = (error) => {
+//       console.error('Falha ao carregar o script: ', error);
+//       reject(error);
+//     }
 
-const loadScript = () => {
-  return new Promise((resolve, reject) => {
-    const scriptElement = document.createElement('script');
-    scriptElement.src = externalScript;
-    scriptElement.async = true;
-
-    scriptElement.onload = () => {
-      console.log('Script carregado')
-      resolve();
-    };
-
-    scriptElement.onerror = (error) => {
-      console.error('Falha ao carregar o script: ', error);
-      reject(error);
-    }
-
-    document.body.appendChild(scriptElement);
-  })
-}
+//     document.body.appendChild(scriptElement);
+//   })
+// }
 
 onMounted(async () => {
-  await loadScript();
-  verificaNumero('start');
   getIp()
 })
 
@@ -245,21 +232,23 @@ onMounted(async () => {
               <div class="row mb-3" v-if="cupomDesconto">
                 <div class="col-md-6">
                   <label for="cupomDesconto">Cupom de desconto:</label>
-                  <input type="text" v-model="form.cupom" class="form-control fs-5" id="cupomDesconto">
+                  <input type="text" v-model="form.cupom" class="form-control fs-5 border-secondary-subtle rounded-3"
+                    id="cupomDesconto">
                 </div>
               </div>
               <div class="row mb-3">
                 <!-- CPF -->
                 <div class="col-md-6 col-lg-3 align-self-end">
                   <label for="cpf" class="form-label">CPF(Somente Brasileiros)</label>
-                  <input type="text" v-model="form.cpf" class="form-control fs-5" id="cpf" @keyup="cpfFormat"
-                    placeholder="999.999.999-99" >
+                  <input type="text" v-model="form.cpf" class="form-control fs-5 border-secondary-subtle rounded-3"
+                    id="cpf" @keyup="cpfFormat" placeholder="999.999.999-99">
                 </div>
 
                 <!-- Tratamento -->
                 <div class="col-md-6 col-lg-3 align-self-end">
                   <label for="tratamento" class="form-label"><span class="text-success">*</span>Tratamento</label>
-                  <select v-model="form.tratamento" class="form-select fs-5" id="tratamento" required>
+                  <select v-model="form.tratamento" class="form-select fs-5 border-secondary-subtle rounded-3"
+                    id="tratamento" required>
                     <option value="" selected disabled>Selecione</option>
                     <option value="Dr">Dr</option>
                     <option value="Dra">Dra</option>
@@ -274,13 +263,15 @@ onMounted(async () => {
                 <!-- Nome Completo -->
                 <div class="col-lg-6">
                   <label for="nomeCompleto" class="form-label"><span class="text-success">*</span>Nome Completo</label>
-                  <input type="text" v-model="form.nomeCompleto" class="form-control fs-5" id="nomeCompleto" required>
+                  <input type="text" v-model="form.nomeCompleto"
+                    class="form-control fs-5 border-secondary-subtle rounded-3" id="nomeCompleto" required>
                 </div>
 
                 <!-- Nome Social -->
                 <div class="col-lg-6">
                   <label for="nomeSocial" class="form-label">Nome Social</label>
-                  <input type="text" v-model="form.nomeSocial" class="form-control fs-5" id="nomeSocial">
+                  <input type="text" v-model="form.nomeSocial"
+                    class="form-control fs-5 border-secondary-subtle rounded-3" id="nomeSocial">
                 </div>
               </div>
               <div class="row mb-3">
@@ -296,37 +287,47 @@ onMounted(async () => {
                 <!-- Cidade -->
                 <div class="col-md-4 align-self-end">
                   <label for="cidade" class="form-label"><span class="text-success">*</span>Cidade</label>
-                  <input type="text" v-model="form.cidade" class="form-control fs-5" id="cidade" required>
+                  <input type="text" v-model="form.cidade" class="form-control fs-5 border-secondary-subtle rounded-3"
+                    id="cidade" required>
                 </div>
 
                 <!-- Celular -->
                 <div class="col-md-4 align-self-end">
-                  <label for="partial_cellphone" class="form-label d-block"><span class="text-success">*</span>Celular</label>
-                  <!-- <input type="tel" v-model="form.celular" class="form-control fs-5" id="celular"
-                    placeholder="(99) 99999-9999" required> -->
-                  <input type="tel" name="partial_cellphone" id="partial_cellphone" @blur="verificaNumero"
-                    maxlength="20" class="form-control fs-5" placeholder="(99)99999-9999" required>
+                  <label class="form-label" for="phone"><span class="text-success">*</span> Informe o Celular com código
+                    do país</label>
+                  <!-- <vue-tel-input 
+                    :placeholder="'Insira seu número'"
+                    v-model="phoneNumber" 
+                    :autoDefaultCountry="true"
+                    :preferredCountries="['br', 'pt']" 
+                    class="form-control border-secondary-subtle rounded-3" @validate="onValidate">
+                  </vue-tel-input> -->
+                  <input type="tel" v-model="form.celular" class="form-control fs-5 border-secondary-subtle rounded-3"
+                    id="phone" placeholder="Ex: +55 11 91234-5678" required>
                 </div>
               </div>
               <div class="row mb-3">
                 <!-- Área de Atuação -->
                 <div class="col-12">
                   <label for="areaAtuacao" class="form-label"><span class="text-success">*</span>Área de Atuação</label>
-                  <input type="text" v-model="form.areaAtuacao" class="form-control fs-5" id="areaAtuacao">
+                  <input type="text" v-model="form.areaAtuacao"
+                    class="form-control fs-5 border-secondary-subtle rounded-3" id="areaAtuacao">
                 </div>
               </div>
               <div class="row mb-3">
                 <!-- Email -->
                 <div class="col-md-6">
                   <label for="email" class="form-label"><span class="text-success">*</span>E-mail</label>
-                  <input type="email" v-model="form.email" class="form-control fs-5" id="email" required>
+                  <input type="email" v-model="form.email" class="form-control fs-5 border-secondary-subtle rounded-3"
+                    id="email" required>
                 </div>
 
                 <!-- Confirmação de Email -->
                 <div class="col-md-6">
                   <label for="confEmail" class="form-label"><span class="text-success">*</span>Confirme o E-mail</label>
-                  <input type="email" v-model="form.confEmail" class="form-control fs-5" id="confEmail"
-                    @blur="checkEmail" required>
+                  <input type="email" v-model="form.confEmail"
+                    class="form-control fs-5 border-secondary-subtle rounded-3" id="confEmail" @blur="checkEmail"
+                    required>
                   <div v-if="alertEmail != ''" class="text-danger small">
                     {{ alertEmail }}
                   </div>
@@ -336,13 +337,13 @@ onMounted(async () => {
                 !-- Senha --
                 <div class="col-md-6">
                   <label for="senha" class="form-label"><span class="text-success">*</span>Senha</label>
-                  <input type="password" v-model="form.senha" class="form-control fs-5" id="senha" required>
+                  <input type="password" v-model="form.senha" class="form-control fs-5 border-secondary-subtle rounded-3" id="senha" required>
                 </div>
 
                 !-- Confirmação de Senha --
                 <div class="col-md-6">
                   <label for="confSenha" class="form-label"><span class="text-success">*</span>Confirme a Senha</label>
-                  <input type="password" v-model="form.confSenha" class="form-control fs-5" id="confSenha"
+                  <input type="password" v-model="form.confSenha" class="form-control fs-5 border-secondary-subtle rounded-3" id="confSenha"
                     @blur="checkPassword" required>
                   <div v-if="alertPassword != ''" class="text-danger small">
                     {{ alertPassword }}
@@ -376,8 +377,8 @@ onMounted(async () => {
                 <div class="col-auto">
                   <label for="participationNumber" class="fs-5 fw-semibold">Se afirmativo, quantas vezes já fez a
                     prova?</label>
-                  <input type="number" id="participationNumber" class="form-control fs-5"
-                    v-model="form.participationNumber">
+                  <input type="number" id="participationNumber"
+                    class="form-control fs-5 border-secondary-subtle rounded-3" v-model="form.participationNumber">
                 </div>
               </div>
               <div class="row mb-3">
@@ -475,8 +476,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-@import url('//eventos.tbr.com.br/global/assets/intltelinput/build/css/intlTelInput.css');
-
 .bg-opaque-green {
   background-color: #E5EBE5 !important;
 }
