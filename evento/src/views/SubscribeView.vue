@@ -17,7 +17,7 @@ const alertEmail = ref('')
 const siteStore = useSiteStore()
 const alertType = ref('alert-danger')
 const errorMessage = ref('')
-const cupomDesconto = ref(true)
+const cupomDesconto = ref(false)
 
 /*
 //celular
@@ -295,11 +295,11 @@ onMounted(async () => {
                 <div class="col-md-4 align-self-end">
                   <label class="form-label" for="phone"><span class="text-success">*</span> Informe o Celular com código
                     do país</label>
-                  <!-- <vue-tel-input 
+                  <!-- <vue-tel-input
                     :placeholder="'Insira seu número'"
-                    v-model="phoneNumber" 
+                    v-model="phoneNumber"
                     :autoDefaultCountry="true"
-                    :preferredCountries="['br', 'pt']" 
+                    :preferredCountries="['br', 'pt']"
                     class="form-control border-secondary-subtle rounded-3" @validate="onValidate">
                   </vue-tel-input> -->
                   <input type="tel" v-model="form.celular" class="form-control fs-5 border-secondary-subtle rounded-3"
