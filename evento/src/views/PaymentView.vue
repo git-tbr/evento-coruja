@@ -149,13 +149,13 @@ onMounted(async () => {
   evento.value = siteStore.evento
   email.value = siteStore.email
 
-  if(sessionStorage.getItem('categoria') == 1098){
+  if (sessionStorage.getItem('categoria') == 1098) {
     cat.value = 'aluno'
     valor.value = '90,00'
-  }else if(sessionStorage.getItem('categoria') == 1099){
+  } else if (sessionStorage.getItem('categoria') == 1099) {
     cat.value = 'novo'
     valor.value = '210,00'
-  }else{
+  } else {
     cat.value = 'cupom'
     valor.value = '199,50'
   }
@@ -184,21 +184,32 @@ onMounted(async () => {
               Valor da taxa de inscrição: &euro; {{ valor }}
             </p>
 
-            <button class="btn btn-lg btn-success rounded-pill" v-if="linkPagamento" @click="openLink()">
-              Pagar Agora
-            </button>
+            <div class="row">
+              <div class="col-lg-6 mx-auto">
+                <button class="btn btn-lg btn-success rounded-pill" v-if="linkPagamento" @click="openLink()">
+                  Pagar Agora
+                </button>
+              </div>
+            </div>
+
+
+            <p class="text-center fs-5 fw-semibold pt-3">
+              Caso opte por fazer o pagamento posteriormente, retorne a esta página, faça o login e terá acesso a realizar o pagamento.
+            </p>
 
             <P class="text-center fs-5 py-3">
               Caso tenha problemas com o pagamento, entre em contato com o suporte:
-              <a class="fs-5 text-decoration-none fw-semibold text-dark pt-2" href="tel:+5511947990277" target="_blank"><font-awesome-icon icon="fa-solid fa-phone" /> +55 11 94799-0277</a> 
-              <a class="fs-5 fw-semibold text-success text-decoration-none py-2" href="https://wa.me/5511947990277" target="_blank"><font-awesome-icon icon="fa-brands fa-whatsapp" /> Whatsapp</a>
+              <a class="fs-5 text-decoration-none fw-semibold text-dark pt-2" href="tel:+5511947990277"
+                target="_blank"><font-awesome-icon icon="fa-solid fa-phone" /> +55 11 94799-0277</a>
+              <a class="fs-5 fw-semibold text-success text-decoration-none py-2" href="https://wa.me/5511947990277"
+                target="_blank"><font-awesome-icon icon="fa-brands fa-whatsapp" /> Whatsapp</a>
             </P>
 
             <p class="text-center text-danger" v-if="errorMessage">
               Não foi possível gerar seu pagamento, por favor entre em contato com o suporte.
               <br>
               Motivo: {{ errorMessage }}
-            </p>            
+            </p>
           </div>
         </div>
       </div>

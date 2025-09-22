@@ -18,6 +18,8 @@ const siteStore = useSiteStore()
 const alertType = ref('alert-danger')
 const errorMessage = ref('')
 const cupomDesconto = ref(false)
+const errorMessageEmail = ref(false)
+
 
 /*
 //celular
@@ -110,6 +112,11 @@ const sendForm = async (data) => {
 
     if (responseData.code == 0) {
       throw new Error(responseData.message)
+    }
+
+    if (responseData.code == 2) {
+      errorMessageEmail.value = true
+      return false;
     }
 
     const userName = `${responseData.dados.firstname} ${responseData.dados.lastname}`
@@ -464,6 +471,15 @@ onMounted(async () => {
                 <div :class="['alert', 'alert-dismissible', 'fade', 'show', alertType]" role="alert"
                   v-if="errorMessage">
                   {{ errorMessage }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              </div>
+              <div class="row">
+                <div :class="['alert', 'alert-dismissible', 'fade', 'show', 'alert-danger']" role="alert"
+                  v-if="errorMessageEmail">
+                    Este cadastro já está ativo. Clique <a href='https://eventos.tbr.com.br/coruja-crpp2025/#/login'>aqui para fazer seu login</a>. 
+                    <br>
+                    Em caso de dúvidas por favor entre em contato com o suporte.
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
               </div>
