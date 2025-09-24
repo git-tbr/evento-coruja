@@ -202,7 +202,17 @@ const handleSubmit = async () => {
 //   })
 // }
 
+const verificarDataCupom = () => {
+  const dataLimite = new Date("2025-09-26T23:59:00");
+  const dataAtual = new Date(new Date().toLocaleString("en-US", { timeZone: 'Europe/Lisbon' }));
+
+  if (dataAtual < dataLimite) {
+    cupomDesconto.value = true;
+  }
+}
+
 onMounted(async () => {
+  verificarDataCupom()
   getIp()
 })
 
@@ -228,7 +238,7 @@ onMounted(async () => {
               Campos obrigatórios *
             </p>
             <p class="text-small" v-if="cupomDesconto">
-              Validade do cupom: de 02/09/2025 a partir das 21:00h até 03/09/2025 às 23:00h (Hora de Lisboa)
+              Validade do cupom: até 26/09/2025 às 23:59h (Hora de Lisboa)
             </p>
           </div>
         </div>
@@ -477,9 +487,10 @@ onMounted(async () => {
               <div class="row">
                 <div :class="['alert', 'alert-dismissible', 'fade', 'show', 'alert-danger']" role="alert"
                   v-if="errorMessageEmail">
-                    Este cadastro já está ativo. Clique <a href='https://eventos.tbr.com.br/coruja-crpp2025/#/login'>aqui para fazer seu login</a>. 
-                    <br>
-                    Em caso de dúvidas por favor entre em contato com o suporte.
+                  Este cadastro já está ativo. Clique <a href='https://eventos.tbr.com.br/coruja-crpp2025/#/login'>aqui
+                    para fazer seu login</a>.
+                  <br>
+                  Em caso de dúvidas por favor entre em contato com o suporte.
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
               </div>
