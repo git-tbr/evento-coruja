@@ -10,65 +10,17 @@ const evento = ref()
 const email = ref()
 const cat = ref()
 const valor = ref()
+const codigoCupom = ref()
+const showCupom = ref(false)
 
 const url = "https://pagamentos.tbr.com.br/stripe/public/create_session.php"
+const urlCoupon = "https://eventos.tbr.com.br/apis/coruja/AplicaCupom.php"
 
-//const alertType = ref('alert-danger')
 const errorMessage = ref()
+const errorMessageCupom = ref()
 const urlsucesso = "https://eventos.tbr.com.br/coruja-crpp2025/#/sucesso?";
 const urlcancelado = "https://eventos.tbr.com.br/coruja-crpp2025/";
 const linkPagamento = ref()
-//var stripe, elements;
-
-/*
-function showMessage(messageText) {
-  const messageContainer = document.querySelector("#payment-message");
-
-  messageContainer.classList.remove("hidden");
-  messageContainer.textContent = messageText;
-
-  setTimeout(function () {
-    messageContainer.classList.add("hidden");
-    messageContainer.textContent = "";
-  }, 4000);
-}
-
-// Show a spinner on payment submission
-function setLoading(isLoading) {
-  if (isLoading) {
-    // Disable the button and show a spinner
-    document.querySelector("#submit").disabled = true;
-    document.querySelector("#spinner").classList.remove("hidden");
-    document.querySelector("#button-text").classList.add("hidden");
-  } else {
-    document.querySelector("#submit").disabled = false;
-    document.querySelector("#spinner").classList.add("hidden");
-    document.querySelector("#button-text").classList.remove("hidden");
-  }
-}
-
-//submit
-async function handleSubmit(e) {
-  e.preventDefault();
-  setLoading(true);
-
-  const { error } = await stripe.confirmPayment({
-    elements,
-    confirmParams: {
-      return_url: returnUrl,
-      receipt_email: document.getElementById("email").value,
-    },
-  });
-
-  if (error.type === "card_error" || error.type === "validation_error") {
-    showMessage(error.message);
-  } else {
-    showMessage("An unexpected error occurred.");
-  }
-
-  setLoading(false);
-}
-*/
 
 //config payment
 const configPayment = async () => {
@@ -99,19 +51,6 @@ const configPayment = async () => {
       throw new Error(responseData.error)
     }
 
-    /*
-    //configuração do pagamento
-    elements = stripe.elements(responseData.clientSecret)
-    const paymentElementOptions = {
-      layout: "accordion",
-    }
-
-    const paymentElement = elements.create("payment", paymentElementOptions)
-    paymentElement.mount("#payment-element")
-
-    document.querySelector("#payment-form").addEventListener("submit", handleSubmit);
-    */
-
     linkPagamento.value = responseData.url
 
   } catch (error) {
@@ -123,25 +62,50 @@ const configPayment = async () => {
   }
 }
 
+const aplicarCupom = async () => {
+  if (codigoCupom.value != null && codigoCupom.value != '') {
+    document.getElementById('button-addon2').disabled = true;
+    try {
+      const response = await fetch(urlCoupon, {
+        method: 'post',
+        headers: new Headers(),
+        body: JSON.stringify({
+          usuario: userId.value,
+          dataCupomDesconto: codigoCupom.value,
+          actualCategory: cat.value,
+          newCategory: 1101,
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error('Ocorreu um erro, por favor verifique o cupom informado e tente novamente')
+      }
+
+      const responseData = await response.json()
+
+      if (responseData.code == 0) {
+        throw new Error(responseData.message)
+      }
+
+      sessionStorage.setItem('categoria', responseData.dados.subscribe_training_center)
+
+      window.location.reload()
+
+    } catch (error) {
+      if (error instanceof Error) {
+        errorMessageCupom.value = error.message
+      } else {
+        errorMessageCupom.value = 'Ocorreu um erro, por favor entre em contato com o suporte'
+      }
+      document.getElementById('button-addon2').disabled = false;
+      codigoCupom.value = ''
+    }
+  }
+}
+
 const openLink = () => {
   window.location.href = linkPagamento.value
 }
-
-/*
-//carregando o script base do stripe
-const loadScript = async (src) => {
-  const script = document.createElement('script')
-  script.src = src
-  script.onload = () => {
-    console.log('Script carregado')
-    stripe = Stripe('pk_live_51RJafKGmwrpUlslzdGpkJ4fGJsh0RptD0gU0d2ZoStCiVnyNr29jBywhRJmZDvIrY6u7XgGVJGq3Rbjciyx9iVLQ00ohnugh6x')
-  }
-  script.onerror = () => {
-    console.log('Erro ao carregar')
-  }
-  document.body.appendChild(script)
-}
-*/
 
 onMounted(async () => {
   userId.value = siteStore.userid
@@ -153,14 +117,15 @@ onMounted(async () => {
     cat.value = 'aluno'
     valor.value = '90,00'
   } else if (sessionStorage.getItem('categoria') == 1099) {
+    showCupom.value = true
     cat.value = 'novo'
     valor.value = '210,00'
   } else {
+    codigoCupom.value = 'CORUJA10'
     cat.value = 'cupom'
-    valor.value = '199,50'
+    valor.value = '189,00'
   }
 
-  //await loadScript('https://js.stripe.com/basil/stripe.js')
   await configPayment()
 })
 
@@ -173,12 +138,26 @@ onMounted(async () => {
         <div class="row justify-content-center">
           <div class="col-auto">
             <h2 class="text-center fw-semibold text-danger">Curso Revisão Pré-Prova</h2>
-            <p class="text-center fw-semibold fs-5" v-if="valor == '199,50'">
+
+            <div class="row" v-if="showCupom">
+              <div class="col-lg-6 mx-auto">
+                <div class="form-group">
+                  <div class="input-group my-3">
+                    <input type="text" v-model="codigoCupom" class="form-control rounded-pill fs-5 mb-1"
+                      placeholder="Cupom de desconto" aria-label="Cupom de desconto" aria-describedby="button-addon2">
+                    <button class="btn btn-success rounded-pill" type="button" id="button-addon2"
+                      @click="aplicarCupom">Aplicar Cupom</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-center fw-semibold fs-5" v-if="valor == '189,00'">
               Valor da taxa de inscrição: &euro; 210,00
               <br>
-              Cupom de desconto: &euro; 10,50
+              Cupom de desconto: &euro; 21,00
               <br>
-              Valor a pagar: &euro; 199,50
+              Valor a pagar: &euro; 189,00
             </p>
             <p class="text-center fw-semibold fs-5" v-else>
               Valor da taxa de inscrição: &euro; {{ valor }}
@@ -194,7 +173,8 @@ onMounted(async () => {
 
 
             <p class="text-center fs-5 fw-semibold pt-3">
-              Caso opte por fazer o pagamento posteriormente, retorne a esta página, faça o login e terá acesso a realizar o pagamento.
+              Caso opte por fazer o pagamento posteriormente, retorne a esta página, faça o login e terá acesso a
+              realizar o pagamento.
             </p>
 
             <P class="text-center fs-5 py-3">
@@ -209,6 +189,11 @@ onMounted(async () => {
               Não foi possível gerar seu pagamento, por favor entre em contato com o suporte.
               <br>
               Motivo: {{ errorMessage }}
+            </p>
+            <p class="text-center text-danger" v-if="errorMessageCupom">
+              Não foi possível aplicar o desconto.
+              <br>
+              Motivo: {{ errorMessageCupom }}
             </p>
           </div>
         </div>
