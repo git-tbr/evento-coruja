@@ -10,14 +10,14 @@ const evento = ref()
 const email = ref()
 const cat = ref()
 const valor = ref()
-const codigoCupom = ref()
-const showCupom = ref(false)
+//const codigoCupom = ref()
+//const showCupom = ref(false)
 
 const url = "https://pagamentos.tbr.com.br/stripe/public/create_session.php"
-const urlCoupon = "https://eventos.tbr.com.br/apis/coruja/AplicaCupom.php"
+//const urlCoupon = "https://eventos.tbr.com.br/apis/coruja/AplicaCupom.php"
 
 const errorMessage = ref()
-const errorMessageCupom = ref()
+//const errorMessageCupom = ref()
 const urlsucesso = "https://eventos.tbr.com.br/coruja-crpp2025/#/sucesso?";
 const urlcancelado = "https://eventos.tbr.com.br/coruja-crpp2025/";
 const linkPagamento = ref()
@@ -62,6 +62,7 @@ const configPayment = async () => {
   }
 }
 
+/*
 const aplicarCupom = async () => {
   if (codigoCupom.value != null && codigoCupom.value != '') {
     document.getElementById('button-addon2').disabled = true;
@@ -102,6 +103,7 @@ const aplicarCupom = async () => {
     }
   }
 }
+*/
 
 const openLink = () => {
   window.location.href = linkPagamento.value
@@ -117,11 +119,11 @@ onMounted(async () => {
     cat.value = 'aluno'
     valor.value = '90,00'
   } else if (sessionStorage.getItem('categoria') == 1099) {
-    showCupom.value = true
+    //showCupom.value = true
     cat.value = 'novo'
     valor.value = '210,00'
   } else {
-    codigoCupom.value = 'CORUJA10'
+    //codigoCupom.value = 'CORUJA10'
     cat.value = 'cupom'
     valor.value = '189,00'
   }
@@ -139,6 +141,7 @@ onMounted(async () => {
           <div class="col-auto">
             <h2 class="text-center fw-semibold text-danger">Curso Revisão Pré-Prova</h2>
 
+            <!--
             <div class="row" v-if="showCupom">
               <div class="col-lg-6 mx-auto">
                 <div class="form-group">
@@ -151,6 +154,7 @@ onMounted(async () => {
                 </div>
               </div>
             </div>
+            -->
 
             <p class="text-center fw-semibold fs-5" v-if="valor == '189,00'">
               Valor da taxa de inscrição: &euro; 210,00
@@ -190,11 +194,13 @@ onMounted(async () => {
               <br>
               Motivo: {{ errorMessage }}
             </p>
+            <!--
             <p class="text-center text-danger" v-if="errorMessageCupom">
               Não foi possível aplicar o desconto.
               <br>
               Motivo: {{ errorMessageCupom }}
             </p>
+            -->
           </div>
         </div>
       </div>
